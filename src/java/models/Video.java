@@ -7,6 +7,7 @@ package models;
 
 import dbprocesos.Conexion;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,15 +25,6 @@ public class Video extends Conexion {
         try {
             ResultSet rs = getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_UPDATABLE).executeQuery("select * from Videos where idvideos = "+ id + ";");
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-
-            // The column count starts from 1
-            for (int i = 1; i <= columnCount; i++ ) {
-              String name = rsmd.getColumnName(i);
-              System.out.println(name);
-              // Do stuff with name
-            }
             rs.last();
             int size = rs.getRow();
             rs.beforeFirst();
@@ -41,15 +33,49 @@ public class Video extends Conexion {
                 return null;
             }
             rs.next();
+            
+            video = parse_from_rs(rs);
+        } catch (SQLException se){
+            System.err.println(se.getMessage());
+        }
+        return video;
+    }
+    
+    public static ArrayList<Video> where(String condition) {
+        ArrayList<Video> videos = new ArrayList<>();
+        try {
+            ResultSet rs = getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_UPDATABLE).executeQuery("select * from videos where " + condition + ";");
+            
+            while(rs.next()){
+                Video rs_video = parse_from_rs(rs);
+                videos.add(rs_video);
+                if (rs_video != null ){
+                    System.out.println(rs_video.titulo);
+                } else {
+                    System.out.println("rs_video es nulo, no se encontraron videos");
+                }
+            }
+            System.out.println("Size videos: "+ videos.size());
+            
+        } catch (SQLException se){
+            System.err.println(se.getMessage());
+        }
+        return videos;
+    }
+    
+    private static Video parse_from_rs(ResultSet rs) {
+        Video video = null;
+        try {
             video = new Video();
             video.id = rs.getInt("idvideos");
             video.titulo = rs.getString("titulo");
             video.descripcion = rs.getString("descripcion");
             video.link = rs.getString("link");
             video.categoria = rs.getString("categoria");
-        } catch (SQLException se){
-            System.err.println(se.getMessage());
+        } catch (Exception e){
+            System.err.println(e.getMessage());
         }
         return video;
-    }
+    } 
 }

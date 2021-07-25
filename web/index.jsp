@@ -7,6 +7,7 @@
 <%@page import="dbprocesos.Conexion"%>
 <%@page import="models.Video"%>
 <%@page import="java.sql.*"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,13 +15,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Si Dios conmigo</title>
         <%
-            Video video = Video.find(1);
-          
+            ArrayList<Video> videos = Video.where("categoria = 'serie'");
         %>
     </head>
     <body>
         <h1>El apache debe encender!</h1>
-        <p><%= video.titulo %></p>
+        
+        <ul>
+            <% for (Video video : videos) { %>
+                <li><%= video.titulo %></li>
+            <% } %>
+        </ul>
     </body>
 </html>
 
