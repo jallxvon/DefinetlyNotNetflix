@@ -5,6 +5,7 @@
 --%>
 <%@ include file="header.jsp"  %>
 <%@page import="dbprocesos.Conexion"%>
+<%@page import="models.Video"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,23 +14,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Si Dios conmigo</title>
         <%
-            Conexion db = new Conexion();
-            
-            String query = "select COUNT(*) from users;";
-            ResultSet rs = db.getConnection().createStatement().executeQuery(query);
-
-
-            int rowcount = 0;
-
-            while (rs.next()){
-                rowcount = rs.getInt(1);
-            }
+            Video video = Video.find(1);
           
         %>
     </head>
     <body>
         <h1>El apache debe encender!</h1>
-        <p><%= rowcount %></p>
+        <p><%= video.titulo %></p>
     </body>
 </html>
 

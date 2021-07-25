@@ -14,16 +14,17 @@ import java.sql.SQLException;
  * @author janel
  */
 public class Conexion {
-    private String username = "root";
-    private String password = "admin";
-    private String hostname = "localhost";
-    private String port = "3306";
-    private String database = "definetlynotnetflixdb";
-    private String classname = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://"+hostname+":"+port+"/"+database;
-    private Connection con;
+    private static String username = "root";
+    private static String password = "admin";
+    private static String hostname = "localhost";
+    private static String port = "3306";
+    private static String database = "definetlynotnetflixdb";
+    private static String classname = "com.mysql.cj.jdbc.Driver";
+    private static String url = "jdbc:mysql://"+hostname+":"+port+"/"+database;
+    private static Connection con;
     
-    public Conexion(){
+    public static Connection getConnection(){
+        con = null;
         try{
             Class.forName(classname);
             con = DriverManager.getConnection(url, username, password);
@@ -36,8 +37,6 @@ public class Conexion {
             System.out.println("Error al conectarse a la db");
             System.err.println(se.getMessage());
         }
-    }
-    public Connection getConnection(){
         return con;
     }
 }
