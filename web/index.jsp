@@ -21,11 +21,24 @@
             ArrayList<Video> favorites = current_user.getFavorites();
             //current_user.create_favorito(fav_video);
             
+            /*
             User new_user = new User();
             new_user.email = "jane@gmail.com";
             new_user.username = "Trapito12";
             new_user.password = "12345";
             new_user.save();
+            */
+            
+            /*
+            Video new_video = new Video();
+            new_video.titulo = "titanic";
+            new_video.descripcion = "En la puerta cabian 2, no me digan que no";
+            new_video.link = "www.netflix.net";
+            new_video.categoria = "pelicula";
+            new_video.save();
+            */
+            //Video.find(12).destroy();
+            User trapo = User.find(2);
         %>
     </head>
     <body>
@@ -43,6 +56,7 @@
                 <li><%= video.id %> - <%= video.titulo %></li>
             <% } %>
         </ul>
+        <h1><%= trapo.username %></h1>
     </body>
 </html>
 
