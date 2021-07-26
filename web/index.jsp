@@ -5,7 +5,7 @@
 --%>
 <%@ include file="header.jsp"  %>
 <%@page import="dbprocesos.Conexion"%>
-<%@page import="models.Video"%>
+<%@page import="models.*"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,11 +16,12 @@
         <title>Si Dios conmigo</title>
         <%
             ArrayList<Video> videos = Video.where("categoria = 'serie'");
+            User current_user = User.find(1);
         %>
     </head>
     <body>
         <h1>El apache debe encender!</h1>
-        
+        <h2><%= current_user.username %></h2>
         <ul>
             <% for (Video video : videos) { %>
                 <li><%= video.titulo %></li>
