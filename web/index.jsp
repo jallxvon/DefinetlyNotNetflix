@@ -20,6 +20,12 @@
             User current_user = User.find_by_credentials("Akatsuki507","123456789");
             ArrayList<Video> favorites = current_user.getFavorites();
             //current_user.create_favorito(fav_video);
+            
+            User new_user = new User();
+            new_user.email = "jane@gmail.com";
+            new_user.username = "Trapito12";
+            new_user.password = "12345";
+            new_user.save();
         %>
     </head>
     <body>

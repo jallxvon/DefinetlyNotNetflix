@@ -100,6 +100,35 @@ public class User {
         return videos;
     }
     
+    public boolean save() {
+        boolean saved = false;
+         if (this.id == 0){
+            try {
+                getConnection()
+                    .createStatement()
+                    .executeUpdate(String.format("INSERT INTO Users (username, password, email) VALUES ('%s','%s','%s');", this.username, this.password, this.email));
+           
+                saved = true;
+            } catch (SQLException se){
+                System.err.println("ON INSERT USER ERROR");
+                System.err.println(se.getMessage());
+            }
+         } else {
+             try {
+                getConnection()
+                    .createStatement()
+                    .executeUpdate(String.format("UPDATE Users SET username = '%s', password = '%s', email = '%s' WHERE idvideos = %s;", this.username, this.password, this.email, this.id));
+           
+                saved = true;
+            } catch (SQLException se){
+                System.err.println("ON UPDATE USER ERROR");
+                System.err.println(se.getMessage());
+            }
+         }
+        
+        return saved;
+    }
+    
     private static User parse_from_rs(ResultSet rs) {
         User user = null;
         try {
