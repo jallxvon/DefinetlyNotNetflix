@@ -61,6 +61,21 @@ public class User {
         return user;
     }
     
+    public boolean create_favorito(Video video){
+        boolean created = false;
+        try {
+            getConnection()
+                .createStatement()
+                .executeUpdate(String.format("INSERT INTO favorites (idvideo, iduser) values ('%s', '%s');", video.id, this.id));
+            created = true;
+            System.out.println("Favorito creado");
+        } catch (SQLException se){
+            System.err.println("ERROR AL CREAR FAVORITO");
+            System.err.println(se.getMessage());
+        }
+        return created;
+    }
+    
     private static User parse_from_rs(ResultSet rs) {
         User user = null;
         try {
