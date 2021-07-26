@@ -81,15 +81,30 @@ public class Video extends Conexion {
     
     public boolean save() {
         boolean saved = false;
-        try {
-            getConnection()
+         if (this.id == 0){
+            try {
+                getConnection()
                     .createStatement()
                     .executeUpdate(String.format("INSERT INTO videos (titulo, descripcion, link, categoria) VALUES ('%s','%s','%s','%s');", this.titulo, this.descripcion, this.link, this.categoria));
            
-            saved = true;
-        } catch (SQLException se){
-            System.err.println(se.getMessage());
-        }
+                saved = true;
+            } catch (SQLException se){
+                System.err.println("ON INSERT VIDEOs ERROR");
+                System.err.println(se.getMessage());
+            }
+         } else {
+             try {
+                getConnection()
+                    .createStatement()
+                    .executeUpdate(String.format("UPDATE videos SET titulo = '%s', descripcion = '%s', link = '%s', categoria = '%s' WHERE idvideos = %s;", this.titulo, this.descripcion, this.link, this.categoria, this.id));
+           
+                saved = true;
+            } catch (SQLException se){
+                System.err.println("ON UPDATE VIDEOs ERROR");
+                System.err.println(se.getMessage());
+            }
+         }
+        
         return saved;
     }
 }
