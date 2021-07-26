@@ -16,7 +16,7 @@
         <title>Si Dios conmigo</title>
         <%
             ArrayList<Video> videos = Video.where("categoria = 'serie'");
-            User current_user = User.find(1);
+            User current_user = User.find_by_credentials("Akatsuki507","123456789");
         %>
     </head>
     <body>

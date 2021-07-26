@@ -38,6 +38,29 @@ public class User {
         return user;
     }
     
+    public static User find_by_credentials(String email, String password){
+        User user = null;
+        try {
+            ResultSet rs = getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_UPDATABLE).executeQuery(String.format("select * from Users where username = '%s' && password = '%s';", email, password));
+            
+            rs.last();
+            int size = rs.getRow();
+            rs.beforeFirst();
+            
+            if (size == 0) {
+                return null;
+            }
+            rs.next();
+            
+            user = parse_from_rs(rs);
+            System.out.println("Usuario '" + user.username + "' encontrado");
+        } catch (SQLException se){
+            System.err.println(se.getMessage());
+        }
+        return user;
+    }
+    
     private static User parse_from_rs(ResultSet rs) {
         User user = null;
         try {
