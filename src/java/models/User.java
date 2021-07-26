@@ -7,6 +7,7 @@ package models;
 import dbprocesos.Conexion;
 import static dbprocesos.Conexion.getConnection;
 import java.sql.*;
+import java.util.ArrayList;
 /**
  *
  * @author janel
@@ -74,6 +75,29 @@ public class User {
             System.err.println(se.getMessage());
         }
         return created;
+    }
+    
+    public ArrayList<Video> getFavorites() {
+        ArrayList<Video> videos = new ArrayList<>();
+        try {
+            ResultSet rs = getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_UPDATABLE).executeQuery(String.format("SELECT videos.* FROM videos INNER JOIN favorites ON videos.idvideos = favorites.idvideo WHERE iduser = %s;", this.id));
+            
+            while(rs.next()){
+                Video rs_video = Video.parse_from_rs(rs);
+                videos.add(rs_video);
+                if (rs_video != null ){
+                    System.out.println(rs_video.titulo);
+                } else {
+                    System.out.println("rs_video es nulo, no se encontraron videos");
+                }
+            }
+            System.out.println("Size videos: "+ videos.size());
+            
+        } catch (SQLException se){
+            System.err.println(se.getMessage());
+        }
+        return videos;
     }
     
     private static User parse_from_rs(ResultSet rs) {

@@ -18,7 +18,8 @@
             ArrayList<Video> videos = Video.where("categoria = 'serie'");
             Video fav_video = Video.find(7);
             User current_user = User.find_by_credentials("Akatsuki507","123456789");
-            current_user.create_favorito(fav_video);
+            ArrayList<Video> favorites = current_user.getFavorites();
+            //current_user.create_favorito(fav_video);
         %>
     </head>
     <body>
@@ -26,6 +27,13 @@
         <h2><%= current_user.username %></h2>
         <ul>
             <% for (Video video : videos) { %>
+                <li><%= video.id %> - <%= video.titulo %></li>
+            <% } %>
+        </ul>
+        
+        <h2>Favorites of <%= current_user.username %></h2>
+        <ul>
+            <% for (Video video : favorites) { %>
                 <li><%= video.id %> - <%= video.titulo %></li>
             <% } %>
         </ul>

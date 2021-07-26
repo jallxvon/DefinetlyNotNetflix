@@ -64,7 +64,7 @@ public class Video {
         return videos;
     }
     
-    private static Video parse_from_rs(ResultSet rs) {
+    public static Video parse_from_rs(ResultSet rs) {
         Video video = null;
         try {
             video = new Video();
