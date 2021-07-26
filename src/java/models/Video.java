@@ -77,5 +77,19 @@ public class Video extends Conexion {
             System.err.println(e.getMessage());
         }
         return video;
-    } 
+    }
+    
+    public boolean save() {
+        boolean saved = false;
+        try {
+            getConnection()
+                    .createStatement()
+                    .executeUpdate(String.format("INSERT INTO videos (titulo, descripcion, link, categoria) VALUES ('%s','%s','%s','%s');", this.titulo, this.descripcion, this.link, this.categoria));
+           
+            saved = true;
+        } catch (SQLException se){
+            System.err.println(se.getMessage());
+        }
+        return saved;
+    }
 }
