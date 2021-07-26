@@ -5,7 +5,7 @@
  */
 package models;
 
-import dbprocesos.Conexion;
+import static dbprocesos.Conexion.getConnection;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author janel
  */
-public class Video extends Conexion {
+public class Video {
     public int id;
     public String titulo;
     public String descripcion;
