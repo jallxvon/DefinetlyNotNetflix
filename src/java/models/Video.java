@@ -107,4 +107,18 @@ public class Video extends Conexion {
         
         return saved;
     }
+    
+    public boolean destroy(){
+        boolean destroyed = false;
+        try {
+            getConnection()
+                .createStatement()
+                .executeUpdate(String.format("DELETE FROM videos WHERE idvideos = %s;", this.id));
+            destroyed = true;
+        } catch (SQLException se){
+            System.err.println("ON DESTROY VIDEOs ERROR");
+            System.err.println(se.getMessage());
+        }
+        return destroyed;
+    }
 }
